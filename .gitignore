@@ -1,2 +1,7 @@
 # Node.js
 node_modules/
+
+# logs
+combined.log
+error.log
+readme
