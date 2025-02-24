@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const logger = require('./logger');
+const createIndexes = require('./dbIndexes');
 
 const connectDB = async () => {
   try {
@@ -8,6 +9,8 @@ const connectDB = async () => {
       useUnifiedTopology: true,
     });
     logger.info(`MongoDB Connected: ${conn.connection.host}`);
+    // await createIndexes();
+
   } catch (error) {
     logger.error(`Error: ${error.message}`);
     process.exit(1);

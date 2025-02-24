@@ -1,6 +1,7 @@
-const Order = require('../models/Order');
+// const Order = require('../models/Order');
 const Product = require('../models/Product');
 const logger = require('../config/logger');
+const { Order } = require('../models');
 
 class SalesService {
   static async getSalesAnalytics(startDate, endDate) {
