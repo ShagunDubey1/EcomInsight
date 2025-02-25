@@ -1,5 +1,3 @@
-const Product = require('../models/Product');
-// const Order = require('../models/Order');
 const logger = require('../config/logger');
 const { Order } = require('../models');
 

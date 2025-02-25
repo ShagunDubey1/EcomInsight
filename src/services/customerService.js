@@ -1,16 +1,13 @@
 const logger = require('../config/logger');
 const { Order } = require('../models');
-const { UUID } = require('bson');
 
 class CustomerService {
   static async getCustomerSpending(customerId) {
     try {
-      const customerUUID = new UUID(customerId);
-
       const result = await Order.aggregate([
         {
           $match: {
-            customerId: customerUUID,
+            customerId: customerId,
             status: 'completed'
           }
         },

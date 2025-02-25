@@ -1,5 +1,6 @@
 const { SalesService } = require('../../services/salesService');
 const logger = require('../../config/logger');
+const Order = require('../../models/Order');
 
 const salesResolver = {
   Query: {
@@ -11,7 +12,7 @@ const salesResolver = {
         logger.error(`Error fetching sales analytics: ${error.message}`);
         throw error;
       }
-    }
+    },
   }
 };
 

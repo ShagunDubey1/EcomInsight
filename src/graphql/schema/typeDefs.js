@@ -30,7 +30,7 @@ const typeDefs = gql`
   type Query {
     getCustomerSpending(customerId: ID!): CustomerSpending!
     getTopSellingProducts(limit: Int!): [TopProduct!]!
-    getSalesAnalytics(startDate: String!, endDate: String!): SalesAnalytics!
+    getSalesAnalytics(startDate: String!, endDate: String!): SalesAnalytics!,
   }
 `;
 
