@@ -9,6 +9,7 @@ A GraphQL API built with Node.js, MongoDB, and Apollo Server for analyzing sales
 - Sales analytics with category breakdown
 - Customer can Place Order
 - Get Customer Orders with Pagination
+- Redis caching for analytics queries
 - Winston logging integration
 - Modular code structure
 - Sample queries are provided in queries.grapghql file
@@ -17,6 +18,7 @@ A GraphQL API built with Node.js, MongoDB, and Apollo Server for analyzing sales
 
 - Node.js (v14+)
 - MongoDB
+- Redis (Docker setup provided)
 - npm or yarn
 
 ## Setup Instructions
@@ -124,6 +126,25 @@ query {
   }
 }
 ```
+
+### Docker Setup for Redis
+- To run Redis locally using Docker, create a docker-compose.yml file:
+
+  ### tart Redis:
+  ```
+    docker-compose up -d
+  ```
+
+  ### Verify Redis is running:
+  ```
+    docker ps
+  ```
+
+  ### Test Redis connection:
+  ```
+    docker exec -it redis_container redis-cli ping
+  ```
+  Expected response: PONG
 
 ## Logging
 
