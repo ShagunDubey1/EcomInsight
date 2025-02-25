@@ -4,7 +4,6 @@ const { Product, Order } = require('../models');
 
 class OrderService {
   static async placeOrder(customerId, products) {
-    console.log("called==>")
     try {
       let totalAmount = 0;
       let orderProducts = [];
@@ -54,6 +53,17 @@ class OrderService {
       throw new Error(`Failed to place order: ${error.message}`);
     }
   }
+
+  static async getOrdersByCustomer(customerId, skip, limit) {
+  return await Order.find({ customerId })
+    .sort({ orderDate: -1 }) 
+    .skip(skip)
+    .limit(limit);
+  };
+
+  static async getTotalOrdersByCustomer(customerId){
+    return await Order.countDocuments({ customerId });
+  };
 }
 
 module.exports = { OrderService };

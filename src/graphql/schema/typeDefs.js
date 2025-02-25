@@ -47,6 +47,13 @@ const typeDefs = gql`
     quantity: Int!
   }
 
+  type PaginatedOrders {
+    orders: [Order!]!
+    totalOrders: Int!
+    totalPages: Int!
+    currentPage: Int!
+  }
+
   type Mutation {
     placeOrder(customerId: ID!, products: [OrderProductInput!]!): Order!
   }
@@ -55,6 +62,7 @@ const typeDefs = gql`
     getCustomerSpending(customerId: ID!): CustomerSpending!
     getTopSellingProducts(limit: Int!): [TopProduct!]!
     getSalesAnalytics(startDate: String!, endDate: String!): SalesAnalytics!
+    getCustomerOrders(customerId: ID!, page: Int!, limit: Int!): PaginatedOrders!
   }
 `;
 
