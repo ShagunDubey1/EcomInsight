@@ -109,7 +109,7 @@ mutation {
 ```
 
 ### Get Customer Order with pagination
-```grapgql
+```graphql
 query {
   getCustomerOrders(customerId: "7895595e-7f25-47fe-a6f8-94b31bfab736", page: 1, limit: 5) {
     orders {
@@ -124,6 +124,7 @@ query {
   }
 }
 ```
+
 ## Logging
 
 The application uses Winston for logging with the following configuration:
