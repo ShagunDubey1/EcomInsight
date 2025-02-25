@@ -27,10 +27,34 @@ const typeDefs = gql`
     categoryBreakdown: [CategoryBreakdown!]!
   }
 
+  type ProductOrder {
+    productId: ID!
+    quantity: Int!
+    priceAtPurchase: Float!
+  }
+
+  type Order {
+    _id: ID!
+    customerId: ID!
+    products: [ProductOrder!]!
+    totalAmount: Float!
+    orderDate: Date!
+    status: String!
+  }
+
+  input OrderProductInput {
+    productId: ID!
+    quantity: Int!
+  }
+
+  type Mutation {
+    placeOrder(customerId: ID!, products: [OrderProductInput!]!): Order!
+  }
+
   type Query {
     getCustomerSpending(customerId: ID!): CustomerSpending!
     getTopSellingProducts(limit: Int!): [TopProduct!]!
-    getSalesAnalytics(startDate: String!, endDate: String!): SalesAnalytics!,
+    getSalesAnalytics(startDate: String!, endDate: String!): SalesAnalytics!
   }
 `;
 

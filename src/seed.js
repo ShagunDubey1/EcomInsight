@@ -2,7 +2,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const csvParser = require('csv-parser');
 const fs = require('fs');
-const { Order, Product } = require('./models');
+const { Order, Product, Customer } = require('./models');
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -11,8 +11,8 @@ mongoose.connect(process.env.MONGODB_URI, {
   .then(() => {
     console.log('Connected to MongoDB');
     // seedOrders();
-    seedProducts();
-    // seedCustomers();
+    // seedProducts();
+    seedCustomers();
   })
   .catch((err) => console.error('MongoDB connection error:', err));
 

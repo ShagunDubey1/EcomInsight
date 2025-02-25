@@ -1,104 +1,4 @@
-// const Order = require('../models/Order');
-// const Product = require('../models/Product');
-// const logger = require('../config/logger');
-
-// class SalesService {
-//   static async getSalesAnalytics(startDate, endDate) {
-//     try {
-//       logger.info(`Analytics requested for dates: ${startDate} to ${endDate}`);
-      
-//       const dateRange = {
-//         orderDate: {
-//           $gte: new Date(startDate),
-//           $lte: new Date(endDate)
-//         },
-//         status: 'completed'
-//       };
-
-//       // First, get total revenue and completed orders
-//       const revenueResult = await Order.aggregate([
-//         { $match: dateRange },
-//         {
-//           $group: {
-//             _id: null,
-//             totalRevenue: { $sum: '$totalAmount' },
-//             completedOrders: { $sum: 1 }
-//           }
-//         }
-//       ]);
-      
-//       // Get all orders in date range
-//       const orders = await Order.find(dateRange).lean();
-//       logger.info(`Found ${orders.length} orders in date range`);
-      
-//       // Get all products (since we know there are only 10)
-//       const allProducts = await Product.find().lean();
-//       logger.info(`Found ${allProducts.length} products in database`);
-      
-//       // Create a product map for quick lookup
-//       const productMap = {};
-//       allProducts.forEach(product => {
-//         productMap[product._id] = product;
-//       });
-      
-//       // Calculate category revenue
-//       const categoryRevenue = {};
-//       let matchedProducts = 0;
-//       let unmatchedProducts = 0;
-      
-//       orders.forEach(order => {
-//         if (!order.products || !Array.isArray(order.products)) return;
-        
-//         order.products.forEach(item => {
-//           if (!item.productId) return;
-          
-//           const product = productMap[item.productId];
-//           if (!product) {
-//             console.log(`Product not found for ID: ${item.productId} in order ${order._id}`);
-//             unmatchedProducts++;
-//             return;
-//           }
-          
-//           matchedProducts++;
-//           const category = product.category;
-//           if (!category) return;
-          
-//           const itemRevenue = item.quantity * item.priceAtPurchase;
-          
-//           if (!categoryRevenue[category]) {
-//             categoryRevenue[category] = 0;
-//           }
-          
-//           categoryRevenue[category] += itemRevenue;
-//         });
-//       });
-      
-//       logger.info(`Matched ${matchedProducts} products, unmatched ${unmatchedProducts}`);
-//       logger.info(`Category revenue:`, categoryRevenue);
-      
-//       // Convert to array format
-//       const categoryBreakdown = Object.entries(categoryRevenue).map(([category, revenue]) => ({
-//         category,
-//         revenue
-//       }));
-      
-//       // Sort by revenue (highest first)
-//       categoryBreakdown.sort((a, b) => b.revenue - a.revenue);
-      
-//       return {
-//         totalRevenue: revenueResult[0]?.totalRevenue || 0,
-//         completedOrders: revenueResult[0]?.completedOrders || 0,
-//         categoryBreakdown
-//       };
-//     } catch (error) {
-//       logger.error(`Error in getSalesAnalytics:`, error);
-//       throw error;
-//     }
-//   }
-// }
-
 const Order = require('../models/Order');
-const Product = require('../models/Product');
 const logger = require('../config/logger');
 
 class SalesService {
@@ -128,7 +28,6 @@ class SalesService {
         }
       },
 
-      // Use $arrayElemAt instead of $unwind to avoid removing unmatched products
       {
         $addFields: {
           productDetails: { $arrayElemAt: ['$productDetails', 0] }
@@ -172,7 +71,6 @@ class SalesService {
       { $sort: { revenue: -1 } }
     ]);
 
-    // Get total revenue and completed orders count
     const stats = await Order.aggregate([
       { $match: dateRange },
       {
