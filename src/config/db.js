@@ -9,7 +9,7 @@ const connectDB = async () => {
       useUnifiedTopology: true,
     });
     logger.info(`MongoDB Connected: ${conn.connection.host}`);
-    // await createIndexes();
+    await createIndexes();
 
   } catch (error) {
     logger.error(`Error: ${error.message}`);
